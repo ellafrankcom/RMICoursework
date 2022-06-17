@@ -3,8 +3,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class ImpClass implements RemoteInt {
-    public void serializable(){
-        Employee e = new Employee();
+    Employee e = new Employee();
+    public void serializable() {
         Scanner scanner = new Scanner(System.in);
         LocalDateTime time = LocalDateTime.now();
 
@@ -19,9 +19,10 @@ public class ImpClass implements RemoteInt {
 
         e.SSN = 12345678;
         e.number = 101;
+        System.out.println("Serialized data was saved in Serialize.ser");
+        Employee.mailProduct();
 
-
-        try{
+        try {
             FileOutputStream file = new FileOutputStream("Serialize.ser");
             ObjectOutputStream out = new ObjectOutputStream(file);
             out.writeObject(e);
@@ -29,19 +30,23 @@ public class ImpClass implements RemoteInt {
             out.close();
             file.close();
             System.out.println("Serialized data was saved in Serialize.ser");
-        }catch(IOException i){
+            Employee.mailProduct();
+        } catch (IOException i) {
             i.printStackTrace();
         }
+
+
+
     }
 
     public class Employee implements java.io.Serializable{
-        public String name;
-        public String product;
-        public String store;
+        public transient String name;
+        public static transient String product;
+        public static transient String store;
         public transient int SSN;
         public int number;
 
-        public void mailProduct(){
+        public static void mailProduct(){
             System.out.println("Sending " + product + " to " + store + "store");
         }
     }
